@@ -32,6 +32,30 @@ module PublicActivity
           @unscoped_trackable
         end
 
+        def unscoped_recipient
+          unless @unscoped_recipient
+            klazz = self.recipient_type.constantize
+            if klazz.respond_to?(:with_deleted)
+              @unscoped_recipient = klazz.with_deleted.where(id: self.recipient_id).first
+            else
+              @unscoped_recipient = self.recipient
+            end
+          end
+          @unscoped_recipient
+        end
+
+        def unscoped_owner
+          unless @unscoped_owner
+            klazz = self.owner_type.constantize
+            if klazz.respond_to?(:with_deleted)
+              @unscoped_owner = klazz.with_deleted.where(id: self.owner_id).first
+            else
+              @unscoped_owner = self.owner
+            end
+          end
+          @unscoped_owner
+        end
+
       end
     end
   end
