@@ -26,7 +26,7 @@ module PublicActivity
     extend ActiveSupport::Concern
 
     included do
-      before_filter :store_controller_for_public_activity
+      before_action :store_controller_for_public_activity
     end
 
     # Before filter executed to remember current controller
